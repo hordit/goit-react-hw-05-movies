@@ -1,8 +1,7 @@
 import noPoster from '../image/no-poster.jpg';
 import { POSTER_URL } from './constants';
 
-export const normalizeMoviesData = (data) => {
-
+const normalizeMoviesData = (data) => {
   return data.map(({
     id,
     title,
@@ -21,3 +20,5 @@ export const normalizeMoviesData = (data) => {
     };
   });
 };
+
+export default normalizeMoviesData;

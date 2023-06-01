@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import 'modern-normalize';
 
-export const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
 
 html {
   box-sizing: border-box;
@@ -41,3 +41,5 @@ ul, ol {
   list-style: none;
 }
 `;
+
+export default GlobalStyle;

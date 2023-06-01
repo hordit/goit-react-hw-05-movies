@@ -3,9 +3,10 @@ import noPoster from '../../image/no-poster.jpg';
 import { useState, useEffect } from 'react';
 import { getMovieDetails } from 'services/api';
 import { HTTP_ERROR_MSG, POSTER_URL } from 'services/constants';
-import { Loader } from 'components/Loader/Loader';
+import Loader from 'components/Loader/Loader';
+import PropTypes from 'prop-types';
 
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [loging, setLoging] = useState(false);
   const [error, setError] = useState('');
@@ -26,7 +27,6 @@ export const Cast = () => {
     };
     fetchCast();
   }, [movieId]);
- 
 
   return (
     <>
@@ -36,15 +36,17 @@ export const Cast = () => {
           <h2>Cast</h2>
           <ul>
             {cast?.map(castData => {
-                const {credit_id, profile_path, name, character} =castData;
-                const poster = profile_path ? `${POSTER_URL}${profile_path}` : noPoster;
-                return (
-                    <li key={credit_id}>
-                        <img src={poster} alt={name} />
-                        <p>{name}</p>
-                        <p>{character}</p>
-                    </li>
-                )
+              const { credit_id, profile_path, name, character } = castData;
+              const poster = profile_path
+                ? `${POSTER_URL}${profile_path}`
+                : noPoster;
+              return (
+                <li key={credit_id}>
+                  <img src={poster} alt={name} />
+                  <p>{name}</p>
+                  <p>{character}</p>
+                </li>
+              );
             })}
           </ul>
         </div>
@@ -56,3 +58,9 @@ export const Cast = () => {
     </>
   );
 };
+
+Cast.propTypes = {
+  movieId: PropTypes.string,
+};
+
+export default Cast;

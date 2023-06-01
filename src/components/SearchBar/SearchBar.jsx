@@ -1,31 +1,33 @@
 import { useState } from 'react';
-import { toast } from 'react-hot-toast';
 import {HiOutlineSearch} from 'react-icons/hi';
+import { toast } from 'react-hot-toast';
+import PropTypes from 'prop-types';
 
-export const SearchBar = ({ onSubmit }) => {
-  const [searchName, setSearchName] = useState('');
+const SearchBar = ({ onSubmit }) => {
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchNameChange = event => {
-    setSearchName(event.currentTarget.value.toLowerCase());
+    setSearchQuery(event.currentTarget.value.toLowerCase());
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (searchName.trim() === '') {
+    if (searchQuery.trim() === '') {
       return toast.error('Please, enter search name!');
     }
 
-    onSubmit(searchName);
-    setSearchName('');
+    onSubmit(searchQuery);
+    setSearchQuery('');
+    event.currentTarget.reset();
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        name="searchName"
-        value={searchName}
+        name="searchQuery"
+        value={searchQuery}
         onChange={handleSearchNameChange}
         autoComplete="off"
         autoFocus
@@ -36,3 +38,9 @@ export const SearchBar = ({ onSubmit }) => {
     </form>
   );
 };
+
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default SearchBar;

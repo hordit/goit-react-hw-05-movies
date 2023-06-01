@@ -1,7 +1,8 @@
 import { POSTER_URL } from 'services/constants';
 import noPoster from '../../image/no-poster.jpg';
+import PropTypes from 'prop-types';
 
-export const DetailsOfMovie = ({
+const DetailsOfMovie = ({
   vote_average,
   title,
   overview,
@@ -40,3 +41,19 @@ export const DetailsOfMovie = ({
     </>
   );
 };
+
+DetailsOfMovie.propTypes = {
+  vote_average: PropTypes.number,
+  title: PropTypes.string,
+  overview: PropTypes.string,
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+    })
+  ),
+  poster_path: PropTypes.string,
+  release_date: PropTypes.string,
+  backdrop_path: PropTypes.string,
+};
+
+export default DetailsOfMovie;
