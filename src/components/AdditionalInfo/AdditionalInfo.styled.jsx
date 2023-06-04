@@ -12,14 +12,10 @@ export const H4 = styled.h4`
   font-weight: bold;
 `;
 
-export const UlAdditional = styled.ul`
-
-`;
-
 export const LiAdditional = styled.li`
   display: block;
   padding: 10px 0;
-  margin-right: 20px;
+  margin: 0 20px 20px 20px;
   border-radius: 2px;
   background-color: ${p => p.theme.colors.black};
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
