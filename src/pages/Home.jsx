@@ -1,5 +1,6 @@
 import Loader from 'components/Loader/Loader';
 import MovieList from 'components/MovieList/MovieList';
+import { TitleTrending } from 'components/MovieList/MovieList.styled';
 import { useState, useEffect } from 'react';
 import { getTrending } from 'services/api';
 import { HTTP_ERROR_MSG } from 'services/constants';
@@ -35,7 +36,7 @@ const Home = () => {
   return (
     <main>
       {loading && <Loader />}
-      <h1>Trending today</h1>
+      <TitleTrending>Trending today</TitleTrending>
       <MovieList movies={movies} />
       {error && <div>{error}</div>}
     </main>

@@ -1,6 +1,7 @@
 import { POSTER_URL } from 'services/constants';
 import noPoster from '../../image/no-poster.jpg';
 import PropTypes from 'prop-types';
+import { DivContainer, DivDetails, ImgDetails } from './DetailsOfMovie.styled';
 
 const DetailsOfMovie = ({
   vote_average,
@@ -22,11 +23,9 @@ const DetailsOfMovie = ({
 
   return (
     <>
-      <div backdrop={backdrop_path}>
-
-        <img src={poster} alt={title} />
-
-        <div>
+      <DivContainer>
+        <ImgDetails src={poster} alt={title} />
+        <DivDetails>
           <h1>
             {title} ({releaseDate})
           </h1>
@@ -35,9 +34,8 @@ const DetailsOfMovie = ({
           <p>{overview}</p>
           <h2>Genres</h2>
           <p>{genredGenres()}</p>
-        </div>
-
-      </div>
+        </DivDetails>
+      </DivContainer>
     </>
   );
 };

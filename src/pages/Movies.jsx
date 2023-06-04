@@ -1,4 +1,5 @@
 import Button from 'components/Button/Button';
+import { DivContainerDetails } from 'components/DetailsOfMovie/DetailsOfMovie.styled';
 import Loader from 'components/Loader/Loader';
 import MovieList from 'components/MovieList/MovieList';
 import SearchBar from 'components/SearchBar/SearchBar';
@@ -14,10 +15,12 @@ const Movies = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showBegin, setShowBegin] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('query');
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (!searchQuery) return;
 
     const fetchMovies = async () => {
@@ -26,7 +29,8 @@ const Movies = () => {
       try {
         const { results, total_results } = await getMoviesByQuery(
           searchQuery,
-          page
+          page,
+          controller.signal,
         );
 
         if (!results.length) {
@@ -36,21 +40,25 @@ const Movies = () => {
 
         setMovies(prevResults => [...prevResults, ...results]);
         setShowBegin(page < Math.ceil(total_results / 20));
+     
       } catch (error) {
-        setError(HTTP_ERROR_MSG);
+        if (error.code !== 'ERR_CANCELED') {
+          setError(HTTP_ERROR_MSG);
+        };;
       } finally {
         setLoading(false);
       }
     };
 
     fetchMovies();
+
+    return () => controller.abort();
   }, [searchQuery, page]);
 
-  const handleFormSubmit = query => {
-    setSearchParams({ query, page });
+  const handleFormSubmit = () => {
+    setPage(1);
     setMovies([]);
     setError('');
-    setPage(1);
   };
 
   const handleLoadMore = () => {
@@ -59,14 +67,14 @@ const Movies = () => {
 
   return (
     <section>
-      <div>
+      <DivContainerDetails>
         <SearchBar onSubmit={handleFormSubmit} />
         {error && <div>{error}</div>}
         {movies && <MovieList movies={movies} />}
         {loading && <Loader />}
         {showBegin && <Button onClick={handleLoadMore} />}
         <Toaster position="top-center" reverseOrder={true} />
-      </div>
+      </DivContainerDetails>
     </section>
   );
 };

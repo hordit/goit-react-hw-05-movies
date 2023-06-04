@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieDetails } from 'services/api';
 import { HTTP_ERROR_MSG } from 'services/constants';
+import { AvailableInfo, H2Autor, H2TitleReviews, LiReviev, UlReviews } from './Reviews.styled';
 
 const Reviews = () => {
   const { movieId } = useParams();
@@ -31,19 +32,19 @@ const Reviews = () => {
       {loging && <Loader />}
       {reviews.length > 0 && (
         <div>
-          <h2>Reviews</h2>
-          <ul>
+          <H2TitleReviews>Reviews</H2TitleReviews>
+          <UlReviews>
             {reviews?.map(({ id, author, content }) => (
-              <li key={id}>
-                <h2>Author: {author}</h2>
+              <LiReviev key={id}>
+                <H2Autor>Author: {author}</H2Autor>
                 <p>{content}</p>
-              </li>
+              </LiReviev>
             ))}
-          </ul>
+          </UlReviews>
         </div>
       )}
       {reviews.length < 1 && (
-        <p>Unfortunately, there are no reviews available for this movie.</p>
+        <AvailableInfo>Unfortunately, there are no reviews available for this movie.</AvailableInfo>
       )}
       {error && <div>{error}</div>}
     </>

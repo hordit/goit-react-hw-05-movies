@@ -18,8 +18,9 @@ export const getTrending = async () => {
   return response.data;
 };
 
-export const getMoviesByQuery = async (query, page) => {
+export const getMoviesByQuery = async (query, page, signal) => {
   const response = await axios.get(SEARCH_MOVIES_ENDPOINT, {
+    signal,
     params: {
       api_key: API_KEY,
       query: query,
@@ -29,8 +30,9 @@ export const getMoviesByQuery = async (query, page) => {
   return response.data;
 };
 
-export const getMovieDetails = async (movieId, details) => {
+export const getMovieDetails = async (movieId, details, signal) => {
   const response = await axios.get(`${MOVIE_ENDPOINT}/${movieId}${details}`, {
+    signal,
     params: {
       api_key: API_KEY,
     },

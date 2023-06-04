@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
-import noPoster from '../../image/no-poster.jpg';
+import noPoster from '../../image/np.png';
 import { useState, useEffect } from 'react';
 import { getMovieDetails } from 'services/api';
 import { HTTP_ERROR_MSG, POSTER_URL } from 'services/constants';
 import Loader from 'components/Loader/Loader';
 import PropTypes from 'prop-types';
+import { AvailableInfo, H2TitleCast, LiCast, UlCast } from './Cast.styled';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -33,26 +34,26 @@ const Cast = () => {
       {loging && <Loader />}
       {cast?.length > 0 && (
         <div>
-          <h2>Cast</h2>
-          <ul>
+          <H2TitleCast>Cast</H2TitleCast>
+          <UlCast>
             {cast?.map(castData => {
               const { credit_id, profile_path, name, character } = castData;
               const poster = profile_path
                 ? `${POSTER_URL}${profile_path}`
                 : noPoster;
               return (
-                <li key={credit_id}>
+                <LiCast key={credit_id}>
                   <img src={poster} alt={name} />
                   <p>{name}</p>
                   <p>{character}</p>
-                </li>
+                </LiCast>
               );
             })}
-          </ul>
+          </UlCast>
         </div>
       )}
       {cast.length < 1 && (
-        <p>Apologies, but no cast information is available.</p>
+        <AvailableInfo>Apologies, but no cast information is available.</AvailableInfo>
       )}
       {error && <div>{error}</div>}
     </>

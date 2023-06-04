@@ -1,16 +1,16 @@
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ButtonBack } from './BackLink.styled';
 
 const BackLink = ({ to, children }) => {
     return (
-      <NavLink to={to}>
+      <ButtonBack to={to}>
         {children}
-      </NavLink>
+      </ButtonBack>
     );
   };
 
   BackLink.propTypes = {
-    to: PropTypes.object.isRequired,
+    to: PropTypes.object,
     children: PropTypes.node.isRequired,
   };
   

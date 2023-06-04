@@ -1,27 +1,28 @@
 import { nanoid } from 'nanoid';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import normalizeMoviesData from 'services/normalizedDataMovies';
 import PropTypes from 'prop-types';
+import { DivTitle, ImgContainer, LiGridItem, MovieLink, MovieTitle, UlGrid } from './MovieList.styled';
 
 const MovieList = ({ movies }) => {
   const location = useLocation();
   const data = normalizeMoviesData(movies);
 
   return (
-    <ul>
+    <UlGrid>
       {data.map(({ id, movieTitle, poster }) => (
-        <li key={nanoid()}>
-          <Link to={`/movies/${id}`} state={{ from: location }}>
-            <div>
+        <LiGridItem key={nanoid()}>
+          <MovieLink to={`/movies/${id}`} state={{ from: location }}>
+            <ImgContainer>
               <img src={poster} alt={movieTitle} />
-              <div>
-                <h3>{movieTitle}</h3>
-              </div>
-            </div>
-          </Link>
-        </li>
+              <DivTitle className="js-overlay">
+                <MovieTitle>{movieTitle}</MovieTitle>
+              </DivTitle>
+            </ImgContainer>
+          </MovieLink>
+        </LiGridItem>
       ))}
-    </ul>
+    </UlGrid>
   );
 };
 

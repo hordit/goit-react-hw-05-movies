@@ -1,41 +1,40 @@
-import { useState } from 'react';
-import {HiOutlineSearch} from 'react-icons/hi';
+import { useSearchParams } from 'react-router-dom';
+import { HiOutlineSearch } from 'react-icons/hi';
 import { toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
+import { ButtonSubmit, Input, SearchForm } from './SearchBar.styled';
 
 const SearchBar = ({ onSubmit }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearchNameChange = event => {
-    setSearchQuery(event.currentTarget.value.toLowerCase());
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('query') ?? '';
 
   const handleSubmit = event => {
     event.preventDefault();
+    const inputValue = event.target.elements.searchQuery.value;
 
-    if (searchQuery.trim() === '') {
+    if (inputValue.length === 0) {
       return toast.error('Please, enter search name!');
     }
 
-    onSubmit(searchQuery);
-    setSearchQuery('');
-    event.currentTarget.reset();
+    setSearchParams({
+      query: inputValue,
+    });
+    onSubmit();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="searchQuery"
-        value={searchQuery}
-        onChange={handleSearchNameChange}
-        autoComplete="off"
-        autoFocus
-      />
-      <button type='submit'>
-        <HiOutlineSearch />
-      </button>
-    </form>
+      <SearchForm onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          name="searchQuery"
+          defaultValue={searchQuery}
+          autoComplete="off"
+          autoFocus
+        />
+        <ButtonSubmit type="submit">
+          <HiOutlineSearch />
+        </ButtonSubmit>
+      </SearchForm>
   );
 };
 
